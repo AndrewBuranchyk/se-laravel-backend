@@ -1,0 +1,108 @@
+# PHP as Linux Web App on Azure
+# Build, package and deploy your PHP project to Azure Linux Web App.
+# Add steps that run tests and more:
+# https://docs.microsoft.com/azure/devops/pipelines/languages/php
+
+trigger:
+- master
+
+variables:
+  # Azure Resource Manager connection created during pipeline creation
+  azureSubscription: '594dbb2c-f45f-4b6f-a2bf-7314a1cd7979'
+
+  # Web app name
+  webAppName: 'se-laravel-backend'
+
+  # Agent VM image name
+  vmImageName: 'ubuntu-22.04'
+
+  # Environment name
+  environmentName: 'se-laravel-backend'
+
+  # Root folder under which your composer.json file is available.
+  rootFolder: $(System.DefaultWorkingDirectory)
+
+stages:
+- stage: Build
+  displayName: Build stage
+  variables:
+    phpVersion: 8.3
+  jobs:
+  - job: BuildJob
+    pool:
+      vmImage: $(vmImageName)
+    steps:
+    - script: |
+        sudo apt-get -qy install software-properties-common
+        sudo add-apt-repository ppa:ondrej/php
+        sudo add-apt-repository ppa:ondrej/apache2
+        sudo apt-get -qy install php$(phpVersion) php$(phpVersion)-curl php$(phpVersion)-mbstring php$(phpVersion)-sqlite3 php$(phpVersion)-xml
+        sudo update-alternatives --set php /usr/bin/php$(phpVersion)
+        sudo update-alternatives --set phar /usr/bin/phar$(phpVersion)
+        sudo update-alternatives --set phar.phar /usr/bin/phar.phar$(phpVersion)
+        php -version
+      workingDirectory: $(rootFolder)
+      displayName: 'Installing PHP $(phpVersion) and needed extensions'
+
+    - script: |
+        sudo composer self-update
+        composer install --no-interaction --prefer-dist
+      workingDirectory: $(rootFolder)
+      displayName: 'Installing Package Dependencies (composer install)'
+
+    - script: php artisan --no-interaction octane:install --server=frankenphp
+      workingDirectory: $(rootFolder)
+      displayName: 'Installing FrankenPHP (PHP application server) by Laravel Octane'
+
+    - script: cp -f azure-laravel-env .env
+      workingDirectory: $(rootFolder)
+      displayName: 'Copying Env File'
+
+    - script: cp -n database/database.sqlite.example database/database.sqlite
+      workingDirectory: $(rootFolder)
+      displayName: 'Copying database file for testing'
+
+    - script: php artisan test
+      workingDirectory: $(rootFolder)
+      displayName: 'Running the tests'
+
+# Only for development branch (trigger: development)
+#    - script: |
+#        sudo touch database/database.sqlite
+#        php artisan migrate:fresh --seed
+#      workingDirectory: $(rootFolder)
+#      displayName: 'Building and seeding the SQLite database'
+
+    - task: ArchiveFiles@2
+      displayName: 'Archive files'
+      inputs:
+        rootFolderOrFile: '$(rootFolder)'
+        includeRootFolder: false
+        archiveType: zip
+        archiveFile: $(Build.ArtifactStagingDirectory)/$(Build.BuildId).zip
+        replaceExistingArchive: true
+
+    - upload: $(Build.ArtifactStagingDirectory)/$(Build.BuildId).zip
+      displayName: 'Upload package'
+      artifact: drop
+
+- stage: Deploy
+  displayName: 'Deploy $(webAppName)'
+  dependsOn: Build
+  condition: succeeded()
+  jobs:
+  - deployment: DeploymentJob
+    pool:
+      vmImage: $(vmImageName)
+    environment: $(environmentName)
+    strategy:
+      runOnce:
+        deploy:
+          steps:
+          - task: AzureWebApp@1
+            displayName: 'Deploy Azure Web App : $(webAppName)'
+            inputs:
+              azureSubscription: $(azureSubscription)
+              appName: $(webAppName)
+              package: $(Pipeline.Workspace)/drop/$(Build.BuildId).zip
+              StartupCommand: '/home/site/wwwroot/azure-pipelines-startup.sh'

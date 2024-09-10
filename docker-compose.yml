@@ -1,0 +1,13 @@
+services:
+    frankenphp:
+        build:
+            context: .
+        entrypoint: php artisan octane:frankenphp --workers=4 --max-requests=250
+        restart: always
+        ports:
+            - "80:80" # HTTP
+            - "443:443" # HTTPS
+            - "443:443/udp" # HTTP/3
+            - "8000:8000"
+        volumes:
+            - .:/app
