@@ -43,6 +43,12 @@ php artisan --no-interaction octane:frankenphp --workers=4 --max-requests=250 --
 ```
 
 
+## Deployment to AWS Lambda using Bref (will come soon ...)
+    Bref comes as an open source Composer package and helps you deploy PHP applications to AWS and run them on AWS Lambda
+    ...
+
+
+
 ## Deployment to Azure App Service directly from the Azure Repos
     Could be completely free of payment
 ### 1. Creating Azure App Service
