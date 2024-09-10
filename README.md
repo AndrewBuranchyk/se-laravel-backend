@@ -22,6 +22,12 @@ cp database/database.sqlite.example database/database.sqlite
 ```sh
 php artisan migrate:fresh --seed
 ```
+    After that seeding there are the following test users:
+    - admin@test.com (with "admin" role)
+    - usersAdmin@test.com (with "usersAdmin" role)
+    - viewOnly@test.com (with "viewOnly" role)
+    - user@test.com (with "user" role)
+    The password for all test users is "123456" (you can change it in UserFactory.php on line 35)
 
 
 ## Running the Server
