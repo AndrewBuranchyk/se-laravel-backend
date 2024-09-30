@@ -43,10 +43,21 @@ php artisan --no-interaction octane:frankenphp --workers=4 --max-requests=250 --
 ```
 
 
+## Running the Tests
+### Running all feature tests
+```sh
+php artisan test --testsuite=Feature 
+```
+
+### Running a specific test
+```sh
+php artisan test --filter=YourTestClassName 
+```
+
+
 ## Deployment to AWS Lambda using Bref (will come soon ...)
     Bref comes as an open source Composer package and helps you deploy PHP applications to AWS and run them on AWS Lambda
     ...
-
 
 
 ## Deployment to Azure App Service directly from the Azure Repos

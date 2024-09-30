@@ -2,14 +2,11 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
-class Card extends Model
+class Log extends Model
 {
-    use HasFactory;
-
     /**
      * The attributes that aren't mass assignable.
      *
@@ -18,11 +15,11 @@ class Card extends Model
     protected $guarded = [];
 
     /**
-     * Get the department that owns the card
+     * Get the user that owns the log record
      */
-    public function department(): BelongsTo
+    public function user(): BelongsTo
     {
-        return $this->belongsTo(Department::class);
+        return $this->belongsTo(User::class);
 
     }
 }
