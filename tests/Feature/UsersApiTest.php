@@ -2,11 +2,11 @@
 
 namespace Tests\Feature;
 
-use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Foundation\Testing\WithFaker;
+// use Illuminate\Foundation\Testing\RefreshDatabase;
+// use Illuminate\Foundation\Testing\WithFaker;
 use PHPUnit\Framework\Attributes\DataProviderExternal;
 use Tests\ApiTestCase;
-use App\Models\{Department, User};
+use App\Models\User;
 use Tests\Datasets\UserDataProvider;
 
 class UsersApiTest extends ApiTestCase

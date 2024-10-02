@@ -2,11 +2,11 @@
 
 namespace Tests;
 
-use Illuminate\Foundation\Testing\TestCase as BaseTestCase;
+use Illuminate\Foundation\Testing\TestCase;
 use App\Models\{Department, User};
 use Database\Seeders\{DepartmentSeeder, UserSeeder};
 
-abstract class ApiTestCase extends BaseTestCase
+class ApiTestCase extends TestCase
 {
     protected const array USER_EMAILS = [
         "admin" => "admin@test.com",
@@ -14,51 +14,6 @@ abstract class ApiTestCase extends BaseTestCase
         "viewOnly" => "viewOnly@test.com",
         "user" => "user@test.com"
     ];
-
-    /**
-     * Test reading a listing of the resource.
-     */
-    abstract public function test_read_resource_list(): void;
-
-    /**
-     * Test creating a new resource with right data.
-     */
-    abstract public function test_create_resource_with_right_data(): void;
-
-    /**
-     * Test creating a new resource with wrong data.
-     */
-    abstract public function test_create_resource_with_wrong_data(): void;
-
-    /**
-     * Test reading the specified resource with right id.
-     */
-    abstract public function test_read_resource_with_right_id(): void;
-
-    /**
-     * Test reading the specified resource with wrong id.
-     */
-    abstract public function test_read_resource_with_wrong_id(): void;
-
-    /**
-     * Test updating the specified resource with right data.
-     */
-    abstract public function test_update_resource_with_right_data(): void;
-
-    /**
-     * Test updating the specified resource with wrong data.
-     */
-    abstract public function test_update_resource_with_wrong_data(): void;
-
-    /**
-     * Test deleting the specified resource with right id.
-     */
-    abstract public function test_delete_resource_with_right_id(): void;
-
-    /**
-     * Test deleting the specified resource with wrong id.
-     */
-    abstract public function test_delete_resource_with_wrong_id(): void;
 
     /**
      * Get test user by Email.
