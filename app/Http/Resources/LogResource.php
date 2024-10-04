@@ -18,7 +18,7 @@ class LogResource extends JsonResource
             'id' => $this->id,
             'user_id' => $this->user_id,
             'event' => $this->event,
-            'resource' => $this->resource,
+            'model' => $this->model,
             'other_data' => $this->other_data,
             'user' => $this->user,
             'created_at' => $this->created_at,

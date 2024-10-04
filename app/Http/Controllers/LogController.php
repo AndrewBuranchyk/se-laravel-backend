@@ -17,6 +17,6 @@ class LogController extends Controller
      */
     public function index(Request $request): AnonymousResourceCollection
     {
-        return LogResource::collection(Log::paginate($request->per_page ?? 10));
+        return LogResource::collection(Log::latest()->paginate($request->per_page ?? 10));
     }
 }

@@ -65,7 +65,7 @@ class CardObserver
         Log::create([
             'user_id' => auth()->user()->id ?? null,
             'event' => $this->event ?? "store",
-            'resource' => 'Card',
+            'model' => 'Card',
             'other_data' => $this->otherData ?? null,
         ]);
 
@@ -87,7 +87,7 @@ class CardObserver
 
         if (!empty($resourceData)) {
             $this->otherData = json_encode([
-                'resource-data' => $resourceData
+                'model-data' => $resourceData
             ]);
         }
         return $this;

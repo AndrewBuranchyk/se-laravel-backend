@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->integer('user_id')->nullable();
             $table->string('event')->nullable();
-            $table->string('resource')->nullable();
+            $table->string('model')->nullable();
             $table->json('other_data')->nullable();
             $table->timestamps();
             $table->index('created_at');

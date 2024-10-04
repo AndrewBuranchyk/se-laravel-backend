@@ -26,7 +26,7 @@ class UserFactory extends Factory
     {
         do {
             $email = fake()->unique()->safeEmail();
-        } while (User::withTrashed()->where('email', $email)->first());
+        } while (User::where('email', $email)->first());
 
         return [
             'name' => fake()->name(),

@@ -65,7 +65,7 @@ class UserObserver
         Log::create([
             'user_id' => auth()->user()->id ?? null,
             'event' => $this->event ?? "store",
-            'resource' => 'User',
+            'model' => 'User',
             'other_data' => $this->otherData ?? null,
         ]);
 
@@ -87,7 +87,7 @@ class UserObserver
 
         if (!empty($resourceData)) {
             $this->otherData = json_encode([
-                'resource-data' => $resourceData
+                'model-data' => $resourceData
             ]);
         }
         return $this;

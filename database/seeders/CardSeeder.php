@@ -2,11 +2,14 @@
 
 namespace Database\Seeders;
 
-use App\Models\Card;
+use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
+use App\Models\Card;
 
 class CardSeeder extends Seeder
 {
+    use WithoutModelEvents;
+
     /**
      * Run the database seeds.
      */
