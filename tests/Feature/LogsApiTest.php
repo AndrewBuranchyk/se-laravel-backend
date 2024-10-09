@@ -29,7 +29,7 @@ class LogsApiTest extends ApiTestCase
                                 'id',
                                 'user_id',
                                 'event',
-                                'resource',
+                                'model',
                                 'other_data',
                                 'user',
                                 'created_at',

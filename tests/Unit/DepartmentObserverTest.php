@@ -12,7 +12,7 @@ class DepartmentObserverTest extends TestCase
         $department = Department::inRandomOrder()->first();
         (new DepartmentObserver())->created($department);
         $log = Log::latest()->first();
-        $this->assertEquals('Department', $log->resource);
+        $this->assertEquals('Department', $log->model);
         $this->assertEquals('created', $log->event);
     }
 
@@ -21,7 +21,7 @@ class DepartmentObserverTest extends TestCase
         $department = Department::inRandomOrder()->first();
         (new DepartmentObserver())->updated($department);
         $log = Log::latest()->first();
-        $this->assertEquals('Department', $log->resource);
+        $this->assertEquals('Department', $log->model);
         $this->assertEquals('updated', $log->event);
     }
 
@@ -30,7 +30,7 @@ class DepartmentObserverTest extends TestCase
         $department = Department::inRandomOrder()->first();
         (new DepartmentObserver())->deleted($department);
         $log = Log::latest()->first();
-        $this->assertEquals('Department', $log->resource);
+        $this->assertEquals('Department', $log->model);
         $this->assertEquals('deleted', $log->event);
     }
 }

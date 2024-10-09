@@ -5,18 +5,23 @@ namespace App\Http\Controllers;
 use App\Models\Log;
 use App\Http\Resources\LogResource;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
-use Illuminate\Http\Request;
+use App\Http\Requests\SearchRequest;
+use App\Services\Search\LogSearch;
 
 class LogController extends Controller
 {
     /**
      * Display a listing of the resource.
      *
-     * @param Request $request
+     * @param SearchRequest $request
+     * @param  LogSearch  $search
      * @return AnonymousResourceCollection
      */
-    public function index(Request $request): AnonymousResourceCollection
+    public function index(SearchRequest $request, LogSearch $search): AnonymousResourceCollection
     {
-        return LogResource::collection(Log::latest()->paginate($request->per_page ?? 10));
+        $logs = $search->getQuery(Log::query(), $request->validated());
+        return LogResource::collection(
+            $logs->latest()->paginate($request->per_page ?? 10)
+        );
     }
 }

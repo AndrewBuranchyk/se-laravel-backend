@@ -12,7 +12,7 @@ class UserObserverTest extends TestCase
         $user = User::inRandomOrder()->first();
         (new UserObserver())->created($user);
         $log = Log::latest()->first();
-        $this->assertEquals('User', $log->resource);
+        $this->assertEquals('User', $log->model);
         $this->assertEquals('created', $log->event);
     }
 
@@ -21,7 +21,7 @@ class UserObserverTest extends TestCase
         $user = User::inRandomOrder()->first();
         (new UserObserver())->updated($user);
         $log = Log::latest()->first();
-        $this->assertEquals('User', $log->resource);
+        $this->assertEquals('User', $log->model);
         $this->assertEquals('updated', $log->event);
     }
 
@@ -30,7 +30,7 @@ class UserObserverTest extends TestCase
         $user = User::inRandomOrder()->first();
         (new UserObserver())->deleted($user);
         $log = Log::latest()->first();
-        $this->assertEquals('User', $log->resource);
+        $this->assertEquals('User', $log->model);
         $this->assertEquals('deleted', $log->event);
     }
 }

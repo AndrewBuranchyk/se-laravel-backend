@@ -12,7 +12,7 @@ class CardObserverTest extends TestCase
         $card = Card::inRandomOrder()->first();
         (new CardObserver())->created($card);
         $log = Log::latest()->first();
-        $this->assertEquals('Card', $log->resource);
+        $this->assertEquals('Card', $log->model);
         $this->assertEquals('created', $log->event);
     }
 
@@ -21,7 +21,7 @@ class CardObserverTest extends TestCase
         $card = Card::inRandomOrder()->first();
         (new CardObserver())->updated($card);
         $log = Log::latest()->first();
-        $this->assertEquals('Card', $log->resource);
+        $this->assertEquals('Card', $log->model);
         $this->assertEquals('updated', $log->event);
     }
 
