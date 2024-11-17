@@ -87,7 +87,7 @@ class CardObserver
 
         if (!empty($resourceData)) {
             $this->otherData = json_encode([
-                'model-data' => $resourceData
+                'modelData' => $resourceData
             ]);
         }
         return $this;

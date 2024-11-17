@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Auth;
 use Symfony\Component\HttpFoundation\Response;
 use App\Http\Requests\LoginRequest;
 use App\Http\Resources\UserResource;
+use App\Models\Log;
 
 class LoginController extends Controller
 {
@@ -22,6 +23,11 @@ class LoginController extends Controller
                 'message' => 'Invalid credential'
             ], Response::HTTP_UNAUTHORIZED);
         }
+
+        Log::create([
+            'user_id' => $request->user()->id,
+            'event' => "login",
+        ]);
 
         return response()->json([
             'token' => $request->user()->createToken($credentials['email'])->plainTextToken,

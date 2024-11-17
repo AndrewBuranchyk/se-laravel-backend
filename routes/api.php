@@ -3,7 +3,13 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Resources\UserResource;
-use App\Http\Controllers\{LoginController, CardController, UserController, DepartmentController, LogController};
+use App\Http\Controllers\{
+    LoginController,
+    CardController,
+    UserController,
+    DepartmentController,
+    LogController
+};
 
 Route::post('/login', [LoginController::class, 'authenticate'])->name('login');
 
