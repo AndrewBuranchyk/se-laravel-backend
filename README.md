@@ -55,9 +55,53 @@ php artisan test --filter=YourTestClassName
 ```
 
 
-## Deployment to AWS Lambda using Bref (will come soon ...)
-    Bref comes as an open source Composer package and helps you deploy PHP applications to AWS and run them on AWS Lambda
-    ...
+## Deployment to AWS Lambda using Bref
+    Bref comes as an open source Composer package and helps you deploy PHP applications to AWS and run them on AWS Lambda. 
+    AWS has a generous free tier that will usually allow you to deploy your first serverless applications for free.
+### 1. AWS Preparation
+    - Go to https://aws.amazon.com/ and log in to your account
+    1. In the AWS dashboard, go into IAM and create a new user: https://us-east-1.console.aws.amazon.com/iamv2/home#/users/create
+    2. Set a user name (for example "bref-cli") and move to the next screen
+    3. Click Attach policies directly, search for AdministratorAccess and select it, then click Next
+    4. Once your user is created, select it and go to Security credentials
+    5. Scroll down to Access Keys and click on Create access key
+    6. Then select Command Line Interface
+    7. Add a description to your access keys and click on Create access key
+
+### 2. Install Serverless framework CLI using NPM
+```sh
+npm install -g serverless@3
+```
+
+### 3. Setup keys gained from AWS using Serverless CLI:
+```sh
+serverless config credentials --provider aws --key "key" --secret "secret"
+```
+
+### 4. Install Brief and Laravel-Brief packages
+```sh
+composer require bref/bref bref/laravel-bridge --update-with-dependencies
+```
+
+### 5. Create serverless.yml configuration file
+```sh
+php artisan vendor:publish --tag=serverless-config
+```
+
+### 6. Prepare the project for deployment by removing unnecessary cache and dependencies
+```sh
+php artisan config:clear
+```
+```sh
+composer install --prefer-dist --optimize-autoloader --no-dev
+```
+
+### 7. Deploy
+```sh
+serverless deploy
+```
+    When finished, the deploy command will show the URL of the application.
+
 
 
 ## Deployment to Azure App Service directly from the Azure Repos
