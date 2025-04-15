@@ -35,6 +35,8 @@ php artisan migrate:fresh --seed
 ```sh
 php artisan serve 
 ```
+    INFO Server running on [http://127.0.0.1:8000].
+
 
 ### After the production deployment running the FrankenPHP server
     FrankenPHP is a Modern PHP App Server, written in Go.
@@ -215,14 +217,28 @@ php artisan fortify:install
 php artisan migrate
 ```
 
-### 5. Installing Octane.
+### 5. Installing Laravel Socialite.
+    Socialite provides authentication with OAuth via Facebook, X, LinkedIn, Google, GitHub, GitLab, Bitbucket, and Slack
+```sh
+composer require laravel/socialite
+```
+    Set Up Google OAuth Credentials:
+    - Go to the Google Cloud Console - https://console.cloud.google.com/
+    - Create a new project (e.g., "Laravel-React-Auth")
+    - Navigate to APIs & Services > Credentials and Click Create Credentials > OAuth 2.0 Client IDs
+    - Select Web Application as the application type
+    - Add Authorized JavaScript Origins (e.g., https://localhost:5173/ for React)
+    - Add Authorized Redirect URIs (e.g., https://localhost:5173/auth/google/callback - for React)
+    - Save to .env file the Client ID and Client Secret
+
+### 6. Installing Octane.
     Octane serving the app using high-powered application servers, including FrankenPHP ... 
     Octane boots the app once, keeps it in memory, and then feeds it requests at supersonic speeds.
 ```sh
 composer require laravel/octane
 ```
 
-### 6. Installing FrankenPHP (only on Linus OS)
+### 7. Installing FrankenPHP (only on Linus OS)
     FrankenPHP is a Modern PHP App Server, written in Go, that supports modern web features like early hints, Brotli, and Zstandard compression.
 ```sh
 php artisan octane:install --server=frankenphp

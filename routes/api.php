@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Resources\UserResource;
 use App\Http\Controllers\{
     LoginController,
+    GoogleAuthController,
     CardController,
     UserController,
     DepartmentController,
@@ -12,6 +13,8 @@ use App\Http\Controllers\{
 };
 
 Route::post('/login', [LoginController::class, 'authenticate'])->name('login');
+Route::get('/auth/google/url', [GoogleAuthController::class, 'getRedirectUrlToGoogle']);
+Route::get('/auth/google/callback', [GoogleAuthController::class, 'handleGoogleCallback']);
 
 Route::middleware(['auth:sanctum'])->group(function () {
     Route::get('/user', function (Request $request) {
